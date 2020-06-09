@@ -8,7 +8,7 @@ var User = function(user){
     this.username = user.username;
     this.create_by = user.create_by;
     this.update_by = user.update_by;
-    this.created_at = new Date();
+    this.create_at = new Date();
     this.update_at = new Date();
 };
 User.createUser = function (new_user, result) {    
@@ -51,7 +51,8 @@ User.getUserList = function (result) {
             });   
 };
 User.updateUser = function(id, user, result){
-  sql.query("UPDATE users SET ? WHERE user_id = ?", [user, id], function (err, res) {
+    delete user['user_id'];
+    sql.query("UPDATE users SET ? WHERE user_id = ?", [user, id], function (err, res) {
           if(err) {
               console.log("error: ", err);
                 result(null, err);

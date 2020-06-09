@@ -6,8 +6,8 @@
             .get(userList.get_user_list)
             .post(userList.create_user);
         
-        app.route('/user/:userId')
+        app.route('/user/:user_id')
             .get(userList.get_user_detail)
-            .post(userList.update_user)
+            .put(userList.update_user)
             .delete(userList.delete_user);
     };

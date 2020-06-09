@@ -4,11 +4,7 @@ var User = require('../model/userModel.js');
 
 exports.get_user_list = function(req, res) {
   User.getUserList(function(err, user) {
-
-    console.log('controller')
-    if (err)
-      res.send(err);
-      console.log('res', user);
+    if (err) res.send(err);
     res.send(user);
   });
 };
@@ -17,13 +13,12 @@ exports.get_user_list = function(req, res) {
 
 exports.create_user = function(req, res) {
     var new_user = new User(req.body);
-
     if(!new_user.first_name || !new_user.last_name){
             res.status(400).send({ error:true, message: 'Please fill info' });
     }else{
         User.createUser(new_user, function(err, user) {
             if (err) res.send(err);
-            res.json(user);
+            res.json({"user_id" : user});
         });
     }
 };
@@ -31,17 +26,15 @@ exports.create_user = function(req, res) {
 
 exports.get_user_detail = function(req, res) {
   User.getUserById(req.params.user_id, function(err, user) {
-    if (err)
-      res.send(err);
-    res.json(user);
+    if (err) res.send(err);
+    res.json(user[0]);
   });
 };
 
 
 exports.update_user = function(req, res) {
   User.updateUser(req.params.user_id, new User(req.body), function(err, user) {
-    if (err)
-      res.send(err);
+    if (err) res.send(err);
     res.json(user);
   });
 };
