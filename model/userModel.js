@@ -12,68 +12,56 @@ var User = function(user){
     this.update_at = new Date();
 };
 User.createUser = function (new_user, result) {    
-        sql.query("INSERT INTO users SET ?", new_user, function (err, res) {
-                
-                if(err) {
-                    console.log("error: ", err);
-                    result(err, null);
-                }
-                else{
-                    console.log(res.insertId);
-                    result(null, res.insertId);
-                }
-            });           
+    sql.query("INSERT INTO users SET ?", new_user, function (err, res) {
+        if(err) {
+            result(err, null);
+        }
+        else{
+            result(null, res.insertId);
+        }
+    });           
 };
 User.getUserById = function (user_id, result) {
-        sql.query("SELECT * FROM users WHERE user_id = ? ", user_id, function (err, res) {             
-                if(err) {
-                    console.log("error: ", err);
-                    result(err, null);
-                }
-                else{
-                    result(null, res);
-              
-                }
-            });   
+    sql.query("SELECT * FROM users WHERE user_id = ? ", user_id, function (err, res) {             
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        
+        }
+    });   
 };
 User.getUserList = function (result) {
-        sql.query("Select * from users", function (err, res) {
-
-                if(err) {
-                    console.log("error: ", err);
-                    result(null, err);
-                }
-                else{
-                  console.log('users : ', res);  
-
-                 result(null, res);
-                }
-            });   
+    sql.query("Select * from users", function (err, res) {
+        if(err) {
+            result(null, err);
+        }
+        else{
+            result(null, res);
+        }
+    });   
 };
 User.updateUser = function(id, user, result){
     delete user['user_id'];
     sql.query("UPDATE users SET ? WHERE user_id = ?", [user, id], function (err, res) {
-          if(err) {
-              console.log("error: ", err);
-                result(null, err);
-             }
-           else{   
-             result(null, res);
-                }
-            }); 
+        if(err) {
+            result(null, err);
+        }else{   
+            result(null, res);
+        }
+    }); 
 };
 User.remove = function(id, result){
-     sql.query("DELETE FROM users WHERE user_id = ?", [id], function (err, res) {
-
-                if(err) {
-                    console.log("error: ", err);
-                    result(null, err);
-                }
-                else{
-               
-                 result(null, res);
-                }
-            }); 
+    sql.query("DELETE FROM users WHERE user_id = ?", [id], function (err, res) {
+        if(err) {
+            result(null, err);
+        }else{
+        
+            result(null, res);
+        }
+    }); 
 };
 
 module.exports= User;
