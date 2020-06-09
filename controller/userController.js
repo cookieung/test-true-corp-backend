@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('../model/userModel.js');
+var Address = require('../model/addressModel.js');
 
 exports.get_user_list = function(req, res) {
   let keyword = "";
@@ -24,6 +25,9 @@ exports.create_user = function(req, res) {
     }else{
         User.createUser(new_user, function(err, user) {
             if (err) res.send(err);
+            Address.createAddress(new_user.address, function(err2, address) {
+              if(err2) res.send(err2);
+            })
             res.json({"user_id" : user});
         });
     }
@@ -41,17 +45,22 @@ exports.get_user_detail = function(req, res) {
 exports.update_user = function(req, res) {
   User.updateUser(req.params.user_id, new User(req.body), function(err, user) {
     if (err) res.send(err);
+
+    Address.updateAddress(req.params.user_id, req.params.address, new Address(req.body), function(err2,address) {
+      if(err2) res.send(err2);
+    })
     res.json(user);
   });
 };
 
 
 exports.delete_user = function(req, res) {
-
-
   User.remove( req.params.user_id, function(err, user) {
-    if (err)
-      res.send(err);
+    if (err) res.send(err);
+    
+    Address.remove(req.params.user_id, function(err2, address) {
+      if(err2) res.send(err2);
+    })
     res.json({ message: 'User is deleted' });
   });
 };
