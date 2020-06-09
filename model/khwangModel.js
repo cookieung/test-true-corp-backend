@@ -21,4 +21,15 @@ Khwang.getById = function (khwang_id, result) {
     });   
 };
 
+Khwang.getList = function (where, result) {
+    sql.query("Select * from khwang "+where, function (err, res) {
+        if(err) {
+            result(null, err);
+        }
+        else{
+            result(null, res);
+        }
+    });   
+};
+
 module.exports= Khwang;

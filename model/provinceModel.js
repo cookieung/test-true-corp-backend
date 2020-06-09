@@ -18,4 +18,15 @@ Province.getById = function (province_id, result) {
     });   
 };
 
+Province.getList = function (result) {
+    sql.query("Select * from province", function (err, res) {
+        if(err) {
+            result(null, err);
+        }
+        else{
+            result(null, res);
+        }
+    });   
+};
+
 module.exports= Province;

@@ -18,10 +18,16 @@
 
     var provinceList = require('../controller/provinceController');
 
+        app.route('/provinces')
+            .get(provinceList.get_list)
+
         app.route('/province/:province_id')
             .get(provinceList.get_detail)
 
     var khetList = require('../controller/KhetController');
+
+        app.route('/khets/:province_id?')
+            .get(khetList.get_list)
 
         app.route('/khet/:khet_id')
         .get(khetList.get_detail)
@@ -29,7 +35,10 @@
 
     var khwangList = require('../controller/khwangController');
 
+        app.route('/khwangs/:province_id?/:khet_id?')
+            .get(khwangList.get_list)
+    
         app.route('/khwang/:khwang_id')
-        .get(khwangList.get_detail)
+            .get(khwangList.get_detail)
 
     };

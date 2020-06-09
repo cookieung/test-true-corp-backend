@@ -19,4 +19,15 @@ Khet.getById = function (khet_id, result) {
     });   
 };
 
+Khet.getList = function (where, result) {
+    sql.query("Select * from khet "+where, function (err, res) {
+        if(err) {
+            result(null, err);
+        }
+        else{
+            result(null, res);
+        }
+    });   
+};
+
 module.exports= Khet;

@@ -9,3 +9,10 @@ exports.get_detail = function(req, res) {
     });
   };
   
+  exports.get_list = function(req, res) {
+    Province.getList(function(err, province) {
+      if (err) res.send(err);
+      res.json(province);
+    });
+  };
+  
