@@ -20,14 +20,22 @@ exports.get_user_list = function(req, res) {
 
 exports.create_user = function(req, res) {
     var new_user = new User(req.body);
+    var new_address = new Address(req.body.address);
     if(!new_user.first_name || !new_user.last_name){
             res.status(400).send({ error:true, message: 'Please fill info' });
     }else{
+
+        let a_err = [];
         User.createUser(new_user, function(err, user) {
-            if (err) res.send(err);
-            Address.createAddress(new_user.address, function(err2, address) {
-              if(err2) res.send(err2);
+            if (err) a_err.push(err);
+
+            new_address.user_id = user;
+            Address.createAddress(new_address, function(err2, address) {
+              if(err2) a_err.push(err2);
             })
+
+            console.log(a_err)
+            if(a_err.length > 0) res.send(a_err)
             res.json({"user_id" : user});
         });
     }

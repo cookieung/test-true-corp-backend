@@ -11,6 +11,10 @@
             .put(userList.update_user)
             .delete(userList.delete_user);
 
+    var addressList = require('../controller/AddressController');
+
+        app.route('/address/:user_id')
+            .get(addressList.get_by_user_id)
 
     var provinceList = require('../controller/provinceController');
 

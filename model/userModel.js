@@ -34,7 +34,7 @@ User.getUserById = function (user_id, result) {
     });   
 };
 User.getUserList = function (keyword, result) {
-    sql.query("Select *, address.* from users JOIN users.user_id = address.user_id "+keyword, function (err, res) {
+    sql.query("Select users.*, address.* from users LEFT JOIN address ON users.user_id = address.user_id "+keyword, function (err, res) {
         if(err) {
             result(null, err);
         }

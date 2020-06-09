@@ -19,7 +19,7 @@ Address.createAddress = function (new_address, result) {
     });           
 };
 Address.getByUserId = function (user_id, result) {
-    sql.query("SELECT * FROM address WHERE user_id = ? ", user_id, function (err, res) {             
+    sql.query("SELECT * FROM address WHERE user_id = ? ", [user_id], function (err, res) {             
         if(err) {
             console.log("error: ", err);
             result(err, null);
