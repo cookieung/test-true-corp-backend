@@ -33,8 +33,8 @@ User.getUserById = function (user_id, result) {
         }
     });   
 };
-User.getUserList = function (result) {
-    sql.query("Select * from users", function (err, res) {
+User.getUserList = function (keyword, result) {
+    sql.query("Select * from users "+keyword, function (err, res) {
         if(err) {
             result(null, err);
         }

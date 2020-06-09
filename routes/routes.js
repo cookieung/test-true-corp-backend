@@ -2,7 +2,7 @@
     module.exports = function(app) {
     var userList = require('../controller/userController');
 
-        app.route('/users')
+        app.route('/users/:keyword?')
             .get(userList.get_user_list)
             .post(userList.create_user);
         

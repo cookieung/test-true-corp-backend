@@ -3,7 +3,13 @@
 var User = require('../model/userModel.js');
 
 exports.get_user_list = function(req, res) {
-  User.getUserList(function(err, user) {
+  let keyword = "";
+
+  console.log(req.params)
+  if(req.params.keyword) {
+    keyword = "WHERE first_name LIKE '%"+req.params.keyword+"%' OR last_name LIKE '%"+req.params.keyword+"%'"
+  }
+  User.getUserList(keyword, function(err, user) {
     if (err) res.send(err);
     res.send(user);
   });
